@@ -1,0 +1,24 @@
+stages:
+  - validate
+  - plan
+  - apply
+
+before_script:
+  - terraform --version
+  - terraform init
+
+validate:
+  stage: validate
+  script:
+    - terraform validate
+
+plan:
+  stage: plan
+  script:
+    - terraform plan -var-file=terraform.tfvars
+
+apply:
+  stage: apply
+  when: manual
+  script:
+    - terraform apply -auto-approve -var-file=terraform.tfvars
