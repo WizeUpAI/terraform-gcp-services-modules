@@ -1,5 +1,19 @@
 
 project_id              = "my-gcp-project"
+service_accounts = [
+  {
+    name         = "my-sa-1"
+    project      = "my-gcp-project"
+    display_name = "My Service Account 1"
+    roles        = ["roles/storage.admin", "roles/pubsub.editor"]
+  },
+  {
+    name         = "my-sa-2"
+    project      = "my-gcp-project"
+    display_name = "My Service Account 2"
+    roles        = ["roles/viewer"]
+  }
+]
 
 composer_environments = [
   {
