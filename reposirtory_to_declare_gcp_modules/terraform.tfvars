@@ -1,6 +1,57 @@
 
 project_id              = "my-gcp-project"
 
+composer_environments = [
+  {
+    name            = "composer-env-1"
+    project         = "my-gcp-project"
+    location        = "us-central1"
+    node_count      = 3
+    machine_type    = "n1-standard-1"
+    disk_size_gb    = 30
+    airflow_version = "composer-2.0.30-airflow-2.2.3"
+    labels          = {
+      env = "prod"
+    }
+    environment_variables = {
+      ENV = "production"
+    }
+    web_server_network_access_control = {
+      allowed_ip_ranges = [
+        {
+          value       = "0.0.0.0/0"
+          description = "Allow all"
+        }
+      ]
+    }
+  },
+  {
+    name         = "composer-env-2"
+    project      = "my-gcp-project"
+    location     = "us-east1"
+  }
+]
+
+app_engine_services = [
+  {
+    service_name = "default"
+    project      = "my-gcp-project"
+    runtime      = "python39"
+    env_variables = {
+      ENV = "prod"
+    }
+    entrypoint = "gunicorn -b :$PORT main:app"
+  },
+  {
+    service_name = "api"
+    project      = "my-gcp-project"
+    runtime      = "nodejs16"
+    env_variables = {
+      NODE_ENV = "production"
+    }
+  }
+]
+
 tables = [
   {
     table_id = "users"
