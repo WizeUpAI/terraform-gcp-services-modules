@@ -1,0 +1,26 @@
+stages:
+  - validate
+  - plan
+  - apply
+
+validate:
+  stage: validate
+  image: hashicorp/terraform:latest
+  script:
+    - terraform init
+    - terraform validate
+
+plan:
+  stage: plan
+  image: hashicorp/terraform:latest
+  script:
+    - terraform init
+    - terraform plan -var-file="terraform.tfvars"
+
+apply:
+  stage: apply
+  image: hashicorp/terraform:latest
+  script:
+    - terraform init
+    - terraform apply -auto-approve -var-file="terraform.tfvars"
+  when: manual
